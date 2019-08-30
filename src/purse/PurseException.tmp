@@ -1,0 +1,52 @@
+/**
+ * Copyright (c) 1999 GEMPLUS group. All Rights Reserved.
+ *------------------------------------------------------------------------------
+ *  Project name:  PACAP  - cas d'étude -
+ *
+ *
+ *  Platform    :  Java virtual machine
+ *  Language    :  JAVA 1.1.x
+ *  Devl tool   :  Symantec VisualCafe
+ *
+ *  @author: Thierry Bressure
+ *  @version 1
+ *------------------------------------------------------------------------------
+ */
+
+
+package com.gemplus.pacap.purse;
+
+// temporarily removed by Rodolphe Muller on 05/07/2000
+import com.gemplus.pacap.utils.PacapException;
+
+public class PurseException extends PacapException {
+
+	////////////////      ATTRIBUTES       ////////////////
+
+
+	public static final byte ADMINISTRATIVE_MODE_ERR = (byte)0x01;
+
+
+	/** instance re-used each time */
+
+	private static PurseException instance;
+
+	///////////////     CONSTRUCTOR     ////////////////
+
+	PurseException(byte code) {
+		super(code);        
+	}
+
+	////////////////       METHODS      ///////////////
+
+	public static void throwIt(byte t) throws PurseException {
+		if(instance == null) {
+			instance = new PurseException(t);
+		} else {
+			instance.setType(t);
+		}
+		throw instance;
+	}
+
+}
+

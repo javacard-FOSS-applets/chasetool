@@ -1,0 +1,93 @@
+#*********************************************************************
+# 
+# 2002 ChAsE tool
+# Néstor CATAÑO COLLAZOS
+# INRIA, France
+# 2004, route des Lucioles - B.P. 93
+# 06902 Sophia-Antipolis Cedex(France)
+#
+# E-mail Nestor.Catano@sophia.inria.fr
+# http://www-sop.inria.fr/lemme/verificard/modifSpec/index.html
+#
+#*********************************************************************
+
+
+#***********************************************
+# INSTALLATION
+#***********************************************
+
+1. Edit the script 'chase' and change the following variables
+according to your system features:
+
+CHASE_HOME='THE_DIRECTORY_WHERE_CHASE_TOOL_IS'
+JAVA_HOME='YOUR_JDK_HOME_INSTALLATION'
+
+2. Change yourself to the chase directory:
+   cd $CHASE_HOME
+
+3. Use 'chase':
+   ./chase file1.java [otherfiles.java]
+
+'file1.java' is the file you want to check for freeness conditions and
+'otherfiles.java' is a list of files which are mention and/or used in
+'file1.java'. 'otherfiles.java' can be a regular expression such as
+dir1/dir2/*.java, for instance. Et voilà! (and that's all!).
+
+
+#**********************************************
+# Examples: 'The Purse JavaCard application'
+#**********************************************
+This tool has been tested with the files of an electronic purse case
+study. A first step would consist in trying these files before trying
+your own ones. For example, if you want to try the class
+'Decimal.java' of the purse distribution, you should do:
+
+1. cd $CHASE_HOME
+
+2. ./chase src/utils/Decimal.java src/utils/*.java src/javacard/framework/*.java
+src/pacapinterfaces/*.java src/javacard/framework/*.java  
+
+Moreover, if you want to try all the files in package 'purse' of the
+purse distribution, you can use the Makefile file that the chase
+distribution ships:
+
+export CHASE_HOME='THE_DIRECTORY_WHERE_CHASE_TOOL_IS'
+make -f $CHASE_HOME/Makefile purse
+
+#**********************************************
+# ABOUT THE 'ASSIGNABLE' SPECIFICATIONS
+#**********************************************
+Basically, you can annotate your Java classes with 'assignable'
+specifications according to JML.
+(see http://www.cs.iastate.edu/~leavens/JML/prelimdesign/prelimdesign_toc.html
+for a more detailed explanation).
+
+For example, the specification of some method 'throwIt' looks like:
+
+/*@  
+  modifies instance, instance.type ;
+ */
+public static void throwIt (byte t) throws PacapException {
+  if ( instance == null ) {
+    instance = new PacapException(t);
+  }
+  else {
+   instance.setType(t);
+  }
+  throw instance;
+}
+
+There, the method declares modifiable (clause 'modifies') the
+locations 'instance' and 'instance.type'.
+
+
+For Any suggestions and/or bugs contact:
+Néstor CATAÑO
+Nestor.Catano@sophia.inria.fr
+INRIA Sophia-Antipolis, France
+2004 route des Lucioles
+B.P. 93, 06902 Cedex
+http://www-sop.inria.fr/lemme/verificard/modifSpec/index.html
+
+tel. (033+)4.92.38.78.59
+fax. (033+)4.92.38.50.60

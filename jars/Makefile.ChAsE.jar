@@ -1,0 +1,6 @@
+JAR_CONTENT = \
+	assignable \
+
+MANIFEST =  
+
+include $(JAVA_DEV_ROOT)/Makefile
